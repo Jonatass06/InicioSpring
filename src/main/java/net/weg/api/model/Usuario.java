@@ -12,6 +12,8 @@ public class Usuario {
     private Carro carro;
 
 
+    public Usuario(){}
+
     public Usuario(Integer id, String nome, String senha, Integer idade) {
         this.id = id;
         this.nome = nome;
@@ -25,7 +27,7 @@ public class Usuario {
     }
 
     public Usuario(ResultSet resultSet) throws SQLException {
-        this.id = resultSet.getInt("idusuarios");
+        this.id = resultSet.getInt("id");
         this.idade = resultSet.getInt("idade");
         this.nome = resultSet.getString("nome");
         this.senha = resultSet.getString("senha");

@@ -14,7 +14,7 @@ public abstract class DAOPadrao<T, ID> implements ICRUD<T, ID> {
     private String comandoSql;
     private String tabela;
 
-    public DAOPadrao(String tabela) throws SQLException {
+    public DAOPadrao(String tabela) {
         this.connection = Banco.conectar();
         this.tabela = tabela;
     }

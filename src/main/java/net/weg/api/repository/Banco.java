@@ -12,8 +12,13 @@ public class Banco {
     private static final String USERNAME = "root";
     private static final String SENHA = "root";
 
-    public static Connection conectar() throws SQLException {
-        return DriverManager.getConnection(URL_BANCO, USERNAME, SENHA);
+    public static Connection conectar() {
+        try{
+            return DriverManager.getConnection(URL_BANCO, USERNAME, SENHA);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
     }
 
 

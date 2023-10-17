@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class CarroDAO extends DAOPadrao<Carro, Integer> {
 
-    public CarroDAO() throws SQLException {
+    public CarroDAO(){
         super("carro");
     }
     @Override

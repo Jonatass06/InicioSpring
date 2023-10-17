@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class UsuarioDAO extends DAOPadrao<Usuario, Integer>{
 
-    public UsuarioDAO() throws SQLException {
+    public UsuarioDAO(){
         super("usuarios");
     }
     @Override
@@ -39,7 +39,7 @@ public class UsuarioDAO extends DAOPadrao<Usuario, Integer>{
 
     @Override
     public void atualizar(Usuario usuario) {
-        super.setComandoSql("Update usuarios set nome = ?, senha = ?, idade = ?, carro = ? where idusuarios = ?");
+        super.setComandoSql("Update usuarios set nome = ?, senha = ?, idade = ?, carro = ? where id = ?");
         try (PreparedStatement s = super.getConnection().prepareStatement(super.getComandoSql())){
             s.setString(1, usuario.getNome());
             s.setString(2, usuario.getSenha());
