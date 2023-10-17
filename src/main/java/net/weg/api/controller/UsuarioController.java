@@ -4,6 +4,7 @@ import net.weg.api.exception.InvalidIndex;
 import net.weg.api.model.Usuario;
 import net.weg.api.repository.CarroDAO;
 import net.weg.api.repository.UsuarioDAO;
+import net.weg.api.service.UsuarioService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -14,6 +15,8 @@ import java.util.InputMismatchException;
 public class UsuarioController {
 
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private UsuarioService usuarioService = new UsuarioService();
+
     @GetMapping("/{id}")
     public Usuario buscarUsuario(@PathVariable Integer id) {
         return usuarioDAO.buscarUm(id);
@@ -26,12 +29,13 @@ public class UsuarioController {
 
     @DeleteMapping("/{id}")
     public void deletarUsuario(@PathVariable Integer id) {
+
         usuarioDAO.deletar(id);
     }
 
     @PostMapping
     public void inserirUsuario(@RequestBody Usuario usuario) throws InvalidIndex {
-        usuarioDAO.inserir(usuario);
+        usuarioService.inserir(usuario);
     }
 
     @PutMapping
