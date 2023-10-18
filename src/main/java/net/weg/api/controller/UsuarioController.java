@@ -14,23 +14,26 @@ import java.util.InputMismatchException;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-    private UsuarioDAO usuarioDAO = new UsuarioDAO();
-    private UsuarioService usuarioService = new UsuarioService();
+    private UsuarioService usuarioService;
+
+    public UsuarioController(UsuarioService usuarioService){
+        this.usuarioService = usuarioService;
+    }
 
     @GetMapping("/{id}")
     public Usuario buscarUsuario(@PathVariable Integer id) {
-        return usuarioDAO.buscarUm(id);
+        return usuarioService.buscarUm(id);
     }
 
     @GetMapping
     public Collection<Usuario> buscarTodos() {
-        return usuarioDAO.buscarTodos();
+        return usuarioService.buscarTodos();
     }
 
-    @DeleteMapping("/{id}")
-    public void deletarUsuario(@PathVariable Integer id) {
+    @DeleteMapping
+    public void deletarUsuario(@RequestParam Integer id) {
 
-        usuarioDAO.deletar(id);
+        usuarioService.deletar(id);
     }
 
     @PostMapping
@@ -39,8 +42,8 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public void atualizarUsuario(@RequestBody Usuario usuario){
-        usuarioDAO.atualizar(usuario);
+    public void atualizarUsuario(@RequestBody Usuario usuario) throws InvalidIndex{
+        usuarioService.atualizar(usuario);
     }
 
 }

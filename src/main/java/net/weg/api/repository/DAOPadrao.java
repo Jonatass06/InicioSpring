@@ -15,7 +15,6 @@ public abstract class DAOPadrao<T, ID> implements ICRUD<T, ID> {
     private String tabela;
 
     public DAOPadrao(String tabela) {
-        this.connection = Banco.conectar();
         this.tabela = tabela;
     }
 
@@ -31,8 +30,13 @@ public abstract class DAOPadrao<T, ID> implements ICRUD<T, ID> {
         this.comandoSql = comandoSql;
     }
 
+    private void conectar(){
+        this.connection = Banco.conectar();
+    }
+
     @Override
     public Set<T> buscarTodos() {
+        this.conectar();
         this.comandoSql = "Select * from " + tabela;
         Set<T> set = new HashSet<>();
         try (PreparedStatement s = connection.prepareStatement(this.comandoSql)) {
@@ -42,6 +46,12 @@ public abstract class DAOPadrao<T, ID> implements ICRUD<T, ID> {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                this.connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return set;
     }
@@ -52,16 +62,24 @@ public abstract class DAOPadrao<T, ID> implements ICRUD<T, ID> {
     }
 
     public void deletar(Integer id) {
+        this.conectar();
         this.comandoSql = "Delete from " + tabela + " where id = ?";
         try (PreparedStatement s = this.connection.prepareStatement(this.comandoSql)) {
             s.setInt(1, id);
             s.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                this.connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     public T buscarUm(Integer id) {
+        this.conectar();
         comandoSql = "Select * from " + tabela + " where id = ?;";
         try (PreparedStatement s = this.connection.prepareStatement(this.comandoSql)) {
             s.setInt(1, id);
@@ -72,6 +90,12 @@ public abstract class DAOPadrao<T, ID> implements ICRUD<T, ID> {
             throw new NoSuchElementException();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                this.connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
