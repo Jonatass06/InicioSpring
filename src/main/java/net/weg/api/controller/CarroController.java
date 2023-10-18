@@ -1,23 +1,19 @@
 package net.weg.api.controller;
 
-import net.weg.api.exception.InvalidIndex;
+import lombok.AllArgsConstructor;
 import net.weg.api.model.Carro;
-import net.weg.api.repository.CarroDAO;
 import net.weg.api.service.CarroService;
-import net.weg.api.service.UsuarioService;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 
 @RestController
 @RequestMapping("/carro")
+@AllArgsConstructor
 public class CarroController {
 
 
     private CarroService carroService;
-    public CarroController(CarroService carroService){
-        this.carroService = carroService;
-    }
 
     @GetMapping("/{id}")
     public Carro buscarCarro(@PathVariable Integer id) {
@@ -35,13 +31,13 @@ public class CarroController {
     }
 
     @PostMapping
-    public void inserirCarro(@RequestBody Carro carro) throws InvalidIndex {
-        carroService.inserir(carro);
+    public void inserirCarro(@RequestBody Carro carro){
+        carroService.salvar(carro);
     }
 
     @PutMapping
     public void atualizarCarro(@RequestBody Carro carro){
-        carroService.atualizar(carro);
+        carroService.salvar(carro);
     }
 
 }

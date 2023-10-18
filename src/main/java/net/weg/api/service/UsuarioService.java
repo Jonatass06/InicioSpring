@@ -1,66 +1,35 @@
 package net.weg.api.service;
 
-import net.weg.api.exception.InvalidIndex;
+import lombok.AllArgsConstructor;
 import net.weg.api.model.Usuario;
-import net.weg.api.repository.CarroDAO;
-import net.weg.api.repository.UsuarioDAO;
+import net.weg.api.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class UsuarioService {
 
 
-    private UsuarioDAO usuarioDAO;
+    private UsuarioRepository usuarioRepository;
     private CarroService carroService;
-    public UsuarioService() {
-        this.usuarioDAO = new UsuarioDAO();
-        this.carroService = new CarroService();
+
+    public void salvar(Usuario usuario){
+        usuarioRepository.save(usuario);
     }
 
-    public void inserir(Usuario usuario) throws InvalidIndex {
-        try {
-            carroService.buscarUm(usuario.getCarro().getId());
-        } catch (NoSuchElementException e) {
-            carroService.inserir(usuario.getCarro());
-        }catch (NullPointerException ignore){}
-        usuarioDAO.inserir(usuario);
-    }
-
-    public Usuario buscarUm(Integer id) {
-        Usuario usuario = usuarioDAO.buscarUm(id);
-        try {
-            usuario.setCarro(carroService.buscarUm(usuario.getCarro().getId()));
-        } catch (NullPointerException ignore) {}
-        return usuario;
+    public Usuario buscarUm(Integer id){
+        return usuarioRepository.findById(id).get();
     }
 
     public Collection<Usuario> buscarTodos() {
-        Collection<Usuario> usuarios = usuarioDAO.buscarTodos();
-        for(Usuario usuario : usuarios){
-            try {
-                usuario.setCarro(carroService.buscarUm(usuario.getCarro().getId()));
-            } catch (NullPointerException ignore) {}
-        }
-        return usuarios;
+        return usuarioRepository.findAll();
     }
 
     public void deletar(Integer id) {
-
-        usuarioDAO.deletar(id);
+        usuarioRepository.deleteById(id);
     }
-
-    public void atualizar(Usuario usuario) throws InvalidIndex{
-        try {
-            carroService.buscarUm(usuario.getCarro().getId());
-        } catch (NoSuchElementException e) {
-            carroService.inserir(usuario.getCarro());
-        }catch (NullPointerException ignore){}
-        usuarioDAO.atualizar(usuario);
-    }
-
-
 }

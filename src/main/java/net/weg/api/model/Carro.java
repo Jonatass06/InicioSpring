@@ -1,5 +1,6 @@
 package net.weg.api.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.ResultSet;
@@ -7,8 +8,12 @@ import java.sql.SQLException;
 
 
 @Data
+@Entity
 @NoArgsConstructor
+
 public class Carro {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String marca;
     private String cor;
@@ -16,16 +21,4 @@ public class Carro {
     private Double preco;
     private Integer ano;
 
-    public Carro(Integer id){
-        this.id = id;
-    }
-
-    public Carro(ResultSet resultSet) throws SQLException {
-        this.id = resultSet.getInt("id");
-        this.marca = resultSet.getString("marca");
-        this.modelo = resultSet.getString("modelo");
-        this.cor = resultSet.getString("cor");
-        this.ano = resultSet.getInt("ano");
-        this.preco = resultSet.getDouble("preco");
-    }
 }
