@@ -1,21 +1,19 @@
-package net.weg.api.model;
+package net.weg.api.model.entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
-@AllArgsConstructor
 @NoArgsConstructor
-public class Endereco {
-    @Id
+@AllArgsConstructor
+@Embeddable
+public class SeguroID {
+    private Integer seguroId;
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Integer id;
-    private String rua, bairro;
-    private Integer numero;
+    private Integer seguradoraId;
+
 }

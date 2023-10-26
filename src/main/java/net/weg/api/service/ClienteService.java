@@ -1,31 +1,29 @@
 package net.weg.api.service;
 
 import lombok.AllArgsConstructor;
-import net.weg.api.model.Usuario;
-import net.weg.api.repository.UsuarioRepository;
+import net.weg.api.model.entity.Cliente;
+import net.weg.api.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class UsuarioService {
+public class ClienteService {
 
 
-    private UsuarioRepository usuarioRepository;
+    private ClienteRepository usuarioRepository;
     private CarroService carroService;
 
-    public void salvar(Usuario usuario){
+    public void salvar(Cliente usuario){
         usuarioRepository.save(usuario);
     }
 
-    public Usuario buscarUm(Integer id){
+    public Cliente buscarUm(Integer id){
         return usuarioRepository.findById(id).get();
     }
 
-    public Collection<Usuario> buscarTodos() {
+    public Collection<Cliente> buscarTodos() {
         return usuarioRepository.findAll();
     }
 
