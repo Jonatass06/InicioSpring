@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Embeddable
 public class SeguroID {
     private Integer seguroId;
     @GeneratedValue(strategy = GenerationType.TABLE)

@@ -1,5 +1,6 @@
 package net.weg.api.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Seguradora {
     private String nome;
     @OneToOne
     private Endereco endereco;
+    @JsonIgnore
     @ManyToMany
     private Set<Cliente> clientes;
 

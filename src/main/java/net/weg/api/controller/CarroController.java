@@ -31,7 +31,7 @@ public class CarroController {
 
     @GetMapping("/seguradora/{id}")
     public ResponseEntity<Collection<Carro>> buscarCarroPorSeguradora(@PathVariable Integer id) {
-        return new ResponseEntity<>(carroService.buscarPorSeguradora(id), HttpStatus.FOUND));
+        return new ResponseEntity<>(carroService.buscarPorSeguradora(id), HttpStatus.FOUND);
     }
 
     @GetMapping("/marca")

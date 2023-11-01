@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -21,5 +22,5 @@ public class Usuario {
     private String senha;
     private Integer idade;
     @ManyToMany(cascade = CascadeType.PERSIST)
-    private Set<Endereco> enderecos;
+    private Collection<Endereco> enderecos;
 }
