@@ -26,7 +26,7 @@ public class SeguroService {
         seguroRepository.save(seguro);
     }
 
-    public Seguro buscarUm(Integer id, Integer seguradoraId){
+    public Seguro buscarUm(Integer id, Long seguradoraId){
         return seguroRepository.findById(new SeguroIdClass(id, seguradoraId)).get();
     }
 
@@ -34,7 +34,7 @@ public class SeguroService {
         return seguroRepository.findAll();
     }
 
-    public void deletar(Integer id, Integer seguradoraId) {
+    public void deletar(Integer id, Long seguradoraId) {
         seguroRepository.deleteById(new SeguroIdClass(id, seguradoraId));
     }
 }

@@ -26,7 +26,6 @@ public class MeusSeguros extends VerticalLayout {
         add(layout);
         grid.setItems(seguroService.buscarTodos());
         grid.removeColumnByKey("seguroId");
-        grid.removeColumnByKey("seguradoraId");
         add(grid);
     }
 

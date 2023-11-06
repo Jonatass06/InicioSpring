@@ -25,7 +25,9 @@ import java.util.Set;
 public class CadastroUsuario extends FormLayout {
 
     private final ClienteService clienteService;
-    private TextField nome = new TextField("Usuario");
+    private TextField usuario = new TextField("Usuario");
+    private TextField nome = new TextField("Nome");
+    private TextField sobrenome = new TextField("Sobrenome");
     private PasswordField senha = new PasswordField("Senha");
     private PasswordField confirmarSenha = new PasswordField("Confirme a Senha");
     private IntegerField idade = new IntegerField("Idasde");
@@ -37,7 +39,7 @@ public class CadastroUsuario extends FormLayout {
 
     CadastroUsuario(ClienteService clienteService) {
         this.clienteService = clienteService;
-        add(nome, senha, confirmarSenha, idade, enderecos, enderecoCadastro,
+        add(usuario, nome, sobrenome, senha, confirmarSenha, idade, enderecos, enderecoCadastro,
                 novoEndereco = new Button("Novo Endereco", event -> enderecoCadastro.open()),
                 cadastrar = new Button("Cadastrar", event -> {
                     Notification notification = new Notification();
@@ -55,7 +57,9 @@ public class CadastroUsuario extends FormLayout {
                                 }
                         );
                         clienteService.salvar(new UsuarioCadastroDTO(
+                                usuario.getValue(),
                                 nome.getValue(),
+                                sobrenome.getValue(),
                                 senha.getValue(),
                                 idade.getValue(),
                                 listaDeEnderecos)

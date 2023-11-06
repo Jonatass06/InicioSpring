@@ -1,5 +1,6 @@
 package net.weg.api.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +23,13 @@ public class Carro {
     private String modelo;
     private Double preco;
     private Integer ano;
+    @JsonIgnore
     @OneToOne(mappedBy = "carro")
     private Seguro seguro;
+
+    @Override
+    public String toString() {
+        return this.marca + " " + this.modelo + " " + this.ano;
+    }
 
 }

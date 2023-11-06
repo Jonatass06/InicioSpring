@@ -20,10 +20,13 @@ public class Seguradora {
     private String nome;
     @OneToOne
     private Endereco endereco;
-    @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Cliente> clientes;
 
+    @Override
+    public String toString() {
+        return this.nome;
+    }
 
 
 }

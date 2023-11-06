@@ -14,8 +14,7 @@ public class Seguro {
 //    @EmbeddedId
 //    private SeguroID id;
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private Integer seguroId;
+    private Long seguroId;
     @Id
     private Integer seguradoraId;
 

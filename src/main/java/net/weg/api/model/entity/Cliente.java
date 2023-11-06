@@ -11,11 +11,16 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cliente extends Usuario{
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Carro> carro;
     @OneToOne(cascade = CascadeType.PERSIST)
     private Habilitacao habilitacao;
     @JsonIgnore
-    @OneToMany(mappedBy="cliente")
+    @OneToMany(mappedBy="cliente", fetch = FetchType.EAGER)
     private Set<Seguro> seguros;
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

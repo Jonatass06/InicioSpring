@@ -33,17 +33,14 @@ public class CadastroSeguro extends FormLayout {
         Select<Seguradora> seguradora = new Select<>();
         seguradora.setLabel("Seguradora");
         seguradora.setItems(seguradoraService.buscarTodos());
-        seguradora.setItemLabelGenerator(Seguradora::getNome);
 
         Select<Carro> veiculo = new Select<>();
         veiculo.setLabel("Carro");
         veiculo.setItems(carroService.buscarTodos());
-        veiculo.setItemLabelGenerator(Carro::getPlaca);
 
         Select<Cliente> cliente = new Select<>();
         cliente.setLabel("Cliente");
         cliente.setItems(clienteService.buscarTodos());
-        cliente.setItemLabelGenerator(Cliente::getNome);
 
         Button cancelar =
                 new Button("Cancelar", event -> cadastro.close());
@@ -58,7 +55,7 @@ public class CadastroSeguro extends FormLayout {
                             cliente.getValue()
                     );
                     try{
-                        seguroService.salvar(seguro);
+                        this.seguroService.salvar(seguro);
                     }catch (Exception exception){
                         exception.printStackTrace();
                     }

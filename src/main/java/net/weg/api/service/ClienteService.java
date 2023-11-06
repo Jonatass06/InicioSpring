@@ -14,28 +14,28 @@ import java.util.Collection;
 public class ClienteService {
 
 
-    private ClienteRepository usuarioRepository;
+    private ClienteRepository clienteRepository;
     private CarroService carroService;
 
     public void salvar(UsuarioCadastroDTO usuario){
         Cliente cliente = new Cliente();
         BeanUtils.copyProperties(usuario, cliente);
-        usuarioRepository.save(cliente);
+        clienteRepository.save(cliente);
     }
     public void editar(Cliente cliente){
-        usuarioRepository.save(cliente);
+        clienteRepository.save(cliente);
     }
 
 
     public Cliente buscarUm(Integer id){
-        return usuarioRepository.findById(id).get();
+        return clienteRepository.findById(id).get();
     }
 
     public Collection<Cliente> buscarTodos() {
-        return usuarioRepository.findAll();
+        return clienteRepository.findAll();
     }
 
     public void deletar(Integer id) {
-        usuarioRepository.deleteById(id);
+        clienteRepository.deleteById(id);
     }
 }

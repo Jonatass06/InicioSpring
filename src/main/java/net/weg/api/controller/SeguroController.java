@@ -15,7 +15,7 @@ public class SeguroController {
 
     private SeguroService seguroService;
     @GetMapping("/{id}/{seguradoraId}")
-    public Seguro buscarUsuario(@PathVariable Integer id, @PathVariable Integer seguradoraId) {
+    public Seguro buscarUsuario(@PathVariable Integer id, @PathVariable Long seguradoraId) {
         return seguroService.buscarUm(id, seguradoraId);
     }
 
@@ -25,7 +25,7 @@ public class SeguroController {
     }
 
     @DeleteMapping("/{id}/{seguradoraId}")
-    public void deletarUsuario(@PathVariable Integer id, @PathVariable Integer seguradoraId) {
+    public void deletarUsuario(@PathVariable Integer id, @PathVariable Long seguradoraId) {
 
         seguroService.deletar(id, seguradoraId);
     }

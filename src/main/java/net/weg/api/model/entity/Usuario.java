@@ -15,12 +15,18 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Integer id;
-    @Column(name="nome") // Mais Configs
+    private String usuario;
     private String nome;
+    private String sobrenome;
     private String senha;
     private Integer idade;
     @ManyToMany(cascade = CascadeType.PERSIST)
     private Collection<Endereco> enderecos;
+
+    @Override
+    public String toString() {
+        return this.nome + " " + this.sobrenome;
+    }
 }
