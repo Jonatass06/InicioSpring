@@ -25,7 +25,7 @@ public class MeusSeguros extends VerticalLayout {
         layout.add(new Button("Adicionar Seguro", event -> cadastro.open()));
         add(layout);
         grid.setItems(seguroService.buscarTodos());
-        grid.removeColumnByKey("seguroId");
+        grid.removeColumn(grid.getColumnByKey("id"));
         add(grid);
     }
 

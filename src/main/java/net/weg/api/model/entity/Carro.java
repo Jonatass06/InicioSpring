@@ -23,13 +23,12 @@ public class Carro {
     private String modelo;
     private Double preco;
     private Integer ano;
-    @JsonIgnore
-    @OneToOne(mappedBy = "carro")
+    @OneToOne(mappedBy = "carro", fetch = FetchType.EAGER)
     private Seguro seguro;
 
     @Override
     public String toString() {
-        return this.marca + " " + this.modelo + " " + this.ano;
+        return this.marca + " - " + this.modelo + " (" + this.placa+")";
     }
 
 }

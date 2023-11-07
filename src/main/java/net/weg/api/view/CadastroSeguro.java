@@ -4,6 +4,8 @@ package net.weg.api.view;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -46,6 +48,9 @@ public class CadastroSeguro extends FormLayout {
                 new Button("Cancelar", event -> cadastro.close());
         Button salvar =
                 new Button("Salvar", e -> {
+                    Notification notification = new Notification();
+                    notification.setDuration(3000);
+
                     SeguroCadastroDTO seguro = new SeguroCadastroDTO(
                             valor.getValue(),
                             descricao.getValue(),
@@ -56,8 +61,14 @@ public class CadastroSeguro extends FormLayout {
                     );
                     try{
                         this.seguroService.salvar(seguro);
+                        notification.setText("Usuario cadastrado com sucesso");
+                        notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
                     }catch (Exception exception){
+                        notification.setText("Erro ao cadastrar usuario");
+                        notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
                         exception.printStackTrace();
+                    }finally {
+                        notification.open();
                     }
                     cadastro.close();
                 });

@@ -2,17 +2,22 @@ package net.weg.api.model.entity;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@Embeddable
 @AllArgsConstructor
+@NoArgsConstructor
 public class SeguroID {
-    private Integer seguroId;
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private Integer seguradoraId;
+    protected Integer seguroId;
+    protected Integer seguradoraId;
+    private static Integer nextId = 1;
+
+    protected SeguroID() {
+        this.seguroId = nextId;
+        nextId++;
+    }
 
 }

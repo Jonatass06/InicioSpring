@@ -15,7 +15,6 @@ public class Cliente extends Usuario{
     private Set<Carro> carro;
     @OneToOne(cascade = CascadeType.PERSIST)
     private Habilitacao habilitacao;
-    @JsonIgnore
     @OneToMany(mappedBy="cliente", fetch = FetchType.EAGER)
     private Set<Seguro> seguros;
 
