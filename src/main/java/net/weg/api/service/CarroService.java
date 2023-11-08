@@ -17,13 +17,13 @@ public class CarroService {
 
     private CarroRepository carroRepository;
 
-    public Carro salvar(CarroCadastroDTO carroDTO) throws Exception{
+    public void salvar(CarroCadastroDTO carroDTO) throws Exception{
         if(carroRepository.existsByPlaca(carroDTO.getPlaca())){
             throw new Exception("Há um carro com a placa " + carroDTO.getPlaca() + " cadastrado!");
         }
         Carro carro = new Carro();
         BeanUtils.copyProperties(carroDTO, carro);
-        return carroRepository.save(carro);
+        carroRepository.save(carro);
     }
     public Carro editar(CarroEdicaoDTO carroDTO) throws Exception{
         if(carroRepository.existsById(carroDTO.getId())){

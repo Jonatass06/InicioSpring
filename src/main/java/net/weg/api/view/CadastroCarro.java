@@ -3,32 +3,28 @@ package net.weg.api.view;
 
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import net.weg.api.model.dto.CarroCadastroDTO;
-import net.weg.api.model.entity.Carro;
 import net.weg.api.service.CarroService;
 
-import java.awt.*;
 
-
-public class CadastroCarro extends FormLayout {
+public class CadastroCarro extends Dialog {
 
     private final CarroService carroService;
+    private final FormLayout fl = new FormLayout();
+    private final TextField marca = new TextField("Marca");
+    private final TextField modelo = new TextField("Modelo");
+    private final TextField placa = new TextField("Placa");
+    private final TextField cor = new TextField("Cor");
+    private final IntegerField ano = new IntegerField("Ano");
+    private final NumberField valor = new NumberField("Valor");
+    private final BotaoCancelar cancelar;
 
-    CadastroCarro(CarroService carroService, Dialog cadastro, Grid<Carro> grid) {
+    CadastroCarro(CarroService carroService) {
+        this.cancelar = new BotaoCancelar(this);
         this.carroService = carroService;
-        TextField marca = new TextField("Marca");
-        TextField modelo = new TextField("Modelo");
-        TextField placa = new TextField("Placa");
-        TextField cor = new TextField("Cor");
-        IntegerField ano = new IntegerField("Ano");
-        NumberField valor = new NumberField("Valor");
-
-        com.vaadin.flow.component.button.Button cancelar =
-                new com.vaadin.flow.component.button.Button("Cancelar", event -> cadastro.close());
         com.vaadin.flow.component.button.Button salvar =
                 new com.vaadin.flow.component.button.Button("Salvar", e -> {
                     CarroCadastroDTO carro = new CarroCadastroDTO(
@@ -44,10 +40,10 @@ public class CadastroCarro extends FormLayout {
                     }catch (Exception exception){
                         exception.printStackTrace();
                     }
-                    grid.setItems(carroService.buscarTodos());
-                    cadastro.close();
+                    this.close();
                 });
-        cadastro.getFooter().add(cancelar, salvar);
-        add(marca, modelo, placa, cor, ano, valor);
+        this.fl.add(marca, modelo, placa, cor, ano, valor);
+        add(this.fl);
+        this.getFooter().add(this.cancelar, salvar);
     }
 }

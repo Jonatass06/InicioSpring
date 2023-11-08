@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Embeddable
 @AllArgsConstructor
-@NoArgsConstructor
 public class SeguroID {
     protected Integer seguroId;
     protected Integer seguradoraId;

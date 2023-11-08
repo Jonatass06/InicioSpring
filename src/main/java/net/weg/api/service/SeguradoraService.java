@@ -9,7 +9,7 @@ import java.util.Collection;
 
 @Service
 @AllArgsConstructor
-public class SeguradoraService {
+public class SeguradoraService{
     private SeguradoraRepository seguradoraRepository;
 
     public void salvar(Seguradora seguradora){

@@ -19,34 +19,37 @@ import net.weg.api.service.ClienteService;
 import net.weg.api.service.SeguradoraService;
 import net.weg.api.service.SeguroService;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class CadastroSeguro extends FormLayout {
+
+public class CadastroSeguro extends Dialog {
 
     private final SeguroService seguroService;
+    private final NumberField valor = new NumberField("Valor");
+    private final TextField descricao = new TextField("Descrição");
+    private final NumberField valorFranquia = new NumberField("Valor da Franquia");
+    //      Selects
+    private final Select<Seguradora> seguradora = new Select<>();
+    private final Select<Carro> veiculo = new Select<>();
+    private final Select<Cliente> cliente = new Select<>();
+    private final FormLayout fl = new FormLayout();
+    private final BotaoCancelar cancelar;
+    private final Button salvar;
 
-    CadastroSeguro(SeguroService seguroService, Dialog cadastro, ClienteService clienteService,
+
+    CadastroSeguro(SeguroService seguroService, ClienteService clienteService,
                    SeguradoraService seguradoraService, CarroService carroService) {
         this.seguroService = seguroService;
-
-        NumberField valor = new NumberField("Valor");
-        TextField descricao = new TextField("Descrição");
-        NumberField valorFranquia = new NumberField("Valor da Franquia");
-//      Selects
-        Select<Seguradora> seguradora = new Select<>();
-        seguradora.setLabel("Seguradora");
-        seguradora.setItems(seguradoraService.buscarTodos());
-
-        Select<Carro> veiculo = new Select<>();
-        veiculo.setLabel("Carro");
-        veiculo.setItems(carroService.buscarTodos());
-
-        Select<Cliente> cliente = new Select<>();
-        cliente.setLabel("Cliente");
-        cliente.setItems(clienteService.buscarTodos());
-
-        Button cancelar =
-                new Button("Cancelar", event -> cadastro.close());
-        Button salvar =
+        //      Selects
+        this.cliente.setLabel("Cliente");
+        this.cliente.setItems(clienteService.buscarTodos());
+        this.veiculo.setLabel("Carro");
+        this.veiculo.setItems(carroService.buscarTodos());
+        this.seguradora.setLabel("Seguradora");
+        this.seguradora.setItems(seguradoraService.buscarTodos());
+        this.cancelar = new BotaoCancelar(this);
+        this.salvar =
                 new Button("Salvar", e -> {
                     Notification notification = new Notification();
                     notification.setDuration(3000);
@@ -59,20 +62,21 @@ public class CadastroSeguro extends FormLayout {
                             veiculo.getValue(),
                             cliente.getValue()
                     );
-                    try{
+                    try {
                         this.seguroService.salvar(seguro);
                         notification.setText("Usuario cadastrado com sucesso");
                         notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-                    }catch (Exception exception){
+                    } catch (Exception exception) {
                         notification.setText("Erro ao cadastrar usuario");
                         notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
                         exception.printStackTrace();
-                    }finally {
+                    } finally {
                         notification.open();
                     }
-                    cadastro.close();
+                    this.close();
                 });
-        cadastro.getFooter().add(cancelar, salvar);
-        add(valor, descricao, valorFranquia, seguradora, veiculo, cliente);
+        this.getFooter().add(cancelar, salvar);
+        this.fl.add(this.valor, this.descricao, this.valorFranquia, this.seguradora, this.veiculo, this.cliente);
+        add(this.fl);
     }
 }

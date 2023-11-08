@@ -1,14 +1,13 @@
 package net.weg.api.view;
 
 import com.vaadin.flow.component.applayout.AppLayout;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 
-@Route("")
 public class NavbarApp extends AppLayout {
 
 
@@ -17,10 +16,10 @@ public class NavbarApp extends AppLayout {
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("left", "var(--lumo-space-l)").set("margin", "0")
                 .set("position", "absolute");
-
         Tabs tabs = getTabs();
-
-        addToNavbar(title, tabs);
+        Button button = new Button("Cadastrar Usuário", event ->  getUI().get().navigate("cadastro-usuario"));
+        button.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        addToNavbar(title, tabs, button);
     }
 
     private Tabs getTabs() {

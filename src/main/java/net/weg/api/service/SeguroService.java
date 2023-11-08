@@ -20,6 +20,8 @@ public class SeguroService {
     public void salvar(SeguroCadastroDTO seguroCadastroDTO) throws Exception{
         Seguro seguro = new Seguro();
         BeanUtils.copyProperties(seguroCadastroDTO, seguro);
+        Integer seguroId = Math.toIntExact(seguroRepository.count());
+        seguro.getId().setSeguroId(seguroId);
         this.seguroRepository.save(seguro);
     }
     public void editar(Seguro seguro){
