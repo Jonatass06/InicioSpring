@@ -4,29 +4,30 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.weg.api.model.entity.Endereco;
 
-import java.util.Collection;
 import java.util.Set;
 
-@Entity
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(unique = true,nullable = false)
     private String usuario;
     private String nome;
     private String sobrenome;
     private String senha;
     private Integer idade;
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    private Collection<Endereco> enderecos;
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Set<Endereco> enderecos;
 
     @Override
     public String toString() {
-        return this.nome + " " + this.sobrenome;
+        return nome + " " + sobrenome;
     }
 }

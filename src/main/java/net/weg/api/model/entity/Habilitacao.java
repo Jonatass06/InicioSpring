@@ -9,14 +9,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Habilitacao {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Long registro, cpf;
     private String orgaoEmissor;
-
 }

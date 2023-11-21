@@ -1,49 +1,51 @@
 package net.weg.api.view;
 
-
+import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import net.weg.api.model.dto.CarroCadastroDTO;
+import com.vaadin.flow.router.Route;
+import lombok.SneakyThrows;
+import net.weg.api.model.DTO.CarroCadastroDTO;
 import net.weg.api.service.CarroService;
 
 
-public class CadastroCarro extends Dialog {
-
+@Route(value = "/carrinho", layout = NavBarApp.class)
+public class CadastroCarro extends FormLayout {
     private final CarroService carroService;
-    private final FormLayout fl = new FormLayout();
-    private final TextField marca = new TextField("Marca");
-    private final TextField modelo = new TextField("Modelo");
-    private final TextField placa = new TextField("Placa");
-    private final TextField cor = new TextField("Cor");
-    private final IntegerField ano = new IntegerField("Ano");
-    private final NumberField valor = new NumberField("Valor");
-    private final BotaoCancelar cancelar;
 
-    CadastroCarro(CarroService carroService) {
-        this.cancelar = new BotaoCancelar(this);
+    public CadastroCarro(CarroService carroService, Dialog cadastro) {
         this.carroService = carroService;
-        com.vaadin.flow.component.button.Button salvar =
-                new com.vaadin.flow.component.button.Button("Salvar", e -> {
-                    CarroCadastroDTO carro = new CarroCadastroDTO(
-                            marca.getValue(),
-                            cor.getValue(),
-                            placa.getValue(),
-                            modelo.getValue(),
-                            valor.getValue(),
-                            ano.getValue()
-                    );
-                    try{
-                        carroService.salvar(carro);
-                    }catch (Exception exception){
-                        exception.printStackTrace();
-                    }
-                    this.close();
-                });
-        this.fl.add(marca, modelo, placa, cor, ano, valor);
-        add(this.fl);
-        this.getFooter().add(this.cancelar, salvar);
+
+        TextField placa = new TextField("Placa");
+        TextField marca = new TextField("Marca");
+        TextField modelo = new TextField("Modelo");
+        TextField cor = new TextField("Cor");
+        IntegerField ano = new IntegerField("Ano");
+        NumberField preco = new NumberField("Preço");
+
+        Button salvar = new Button("Cadastrar carro", new ComponentEventListener<ClickEvent<Button>>() {
+            @SneakyThrows
+            @Override
+            public void onComponentEvent(ClickEvent<Button> event) {
+                CarroCadastroDTO carroCadastroDTO = new CarroCadastroDTO(
+                        placa.getValue(),
+                        marca.getValue(),
+                        cor.getValue(),
+                        modelo.getValue(),
+                        preco.getValue(),
+                        ano.getValue()
+                );
+                carroService.criar(carroCadastroDTO);
+                cadastro.close();
+            }
+        });
+        Button cancelar = new Button("Cancelar", event -> cadastro.close());
+        cadastro.getFooter().add(salvar,cancelar);
+        add(placa, marca, modelo, cor, ano, preco);
     }
 }

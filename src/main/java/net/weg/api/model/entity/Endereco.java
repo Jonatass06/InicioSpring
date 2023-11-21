@@ -9,13 +9,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Endereco {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String rua, bairro;
+    private String rua,bairro;
     private Integer numero;
 }

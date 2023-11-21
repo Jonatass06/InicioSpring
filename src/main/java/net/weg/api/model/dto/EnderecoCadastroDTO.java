@@ -1,13 +1,13 @@
-package net.weg.api.model.dto;
+package net.weg.api.model.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data
 @AllArgsConstructor
+@Data
 public class EnderecoCadastroDTO {
 
-    private String rua;
-    private String bairro;
+    private String rua,bairro;
     private Integer numero;
+
 }

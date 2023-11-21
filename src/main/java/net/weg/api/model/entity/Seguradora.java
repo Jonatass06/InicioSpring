@@ -9,24 +9,19 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Data
-@Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Seguradora {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Long cnpj;
     private String nome;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Endereco endereco;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     private Set<Cliente> clientes;
-
-    @Override
-    public String toString() {
-        return this.nome;
-    }
 
 
 }

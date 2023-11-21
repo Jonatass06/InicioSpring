@@ -2,21 +2,34 @@ package net.weg.api.model.entity;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.weg.api.repository.SeguroRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Data
-@Embeddable
 @AllArgsConstructor
-public class SeguroID {
-    protected Integer seguroId;
-    protected Integer seguradoraId;
-    private static Integer nextId = 1;
+@Embeddable
+@Component
+public class SeguroId {
 
-    protected SeguroID() {
-        this.seguroId = nextId;
-        nextId++;
+    @Autowired
+    SeguroRepository seguroRepository;
+    private Integer seguroId;
+    private Integer seguradoraId;
+
+
+    public SeguroId() {
+        seguroId = Math.toIntExact(seguroRepository.count() + 1);
+    }
+
+    public SeguroId(Integer seguroId, Integer seguradoraId){
+        this.seguroId = seguroId;
+        this.seguradoraId = seguradoraId;
     }
 
 }
