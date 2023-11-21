@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Route(value="/cadastro-usuario", layout = NavBarApp.class)
-public class CadastroUsuario extends PaginaPadrao<Cliente> {
+public class CadastroUsuario extends VerticalLayout{
 
     private TextField usuario = new TextField("Usuario");
     private TextField nome = new TextField("Nome");
@@ -44,7 +44,6 @@ public class CadastroUsuario extends PaginaPadrao<Cliente> {
 
 
     CadastroUsuario(UsuarioService usuarioService){
-        super();
         FormLayout formLayout = new FormLayout();
         this.setHorizontalComponentAlignment(
                 Alignment.CENTER,formLayout

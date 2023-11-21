@@ -34,7 +34,7 @@ public class SeguradoraController {
     public Collection<Seguradora> buscarTodos(){
         return seguradoraService.buscarTodos();
     }
-    @GetMapping()
+    @GetMapping("/{id}")
     public void buscarUm(Integer id){
         seguradoraService.buscarUm(id);
     }
