@@ -1,13 +1,13 @@
-package net.weg.api.model.DTO;
+package net.weg.api.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class EnderecoCadastroDTO {
+public class EnderecoCadastroDTO implements  IDTO{
 
-    private String rua,bairro;
+    private String rua;
+    private String bairro;
     private Integer numero;
-
 }

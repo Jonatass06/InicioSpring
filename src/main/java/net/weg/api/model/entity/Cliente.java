@@ -5,48 +5,22 @@ import lombok.*;
 
 import java.util.Set;
 
-
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Cliente extends Usuario {
-//    @Id @GeneratedValue(strategy = GenerationType.TABLE) private int id;
-//    @Column(name = "nome",length = 350)
+@Table(name = "cliente")
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+public class Cliente extends Usuario {
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Carro> carro;
-//    @OneToOne(cascade = CascadeType.PERSIST)
+    //    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 //    private Habilitacao habilitacao;
-    @OneToMany(mappedBy = "cliente",fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     private Set<Seguro> seguros;
 
     @Override
     public String toString() {
-        return super.toString();
+      return super.toString();
     }
-
-    //    public Jogador() {
-//    }
-
-//    @Override
-//    public String toString() {
-//        return "Jogador{" +
-//                "id=" + id +
-//                ", nome='" + nome + '\'' +
-//                ", golsMarcados=" + golsMarcados +
-//                ", clubeFutebol=" + clubeFutebol +
-//                '}';
-//    }
 }
-
-
-
-
-
-
-
-
-
-
-
-

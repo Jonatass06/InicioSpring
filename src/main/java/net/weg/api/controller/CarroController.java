@@ -1,71 +1,83 @@
 package net.weg.api.controller;
 
 import lombok.AllArgsConstructor;
-import net.weg.api.model.DTO.CarroCadastroDTO;
-import net.weg.api.model.DTO.CarroEdicaoDTO;
+import net.weg.api.model.dto.CarroCadastroDTO;
+import net.weg.api.model.dto.CarroEdicaoDTO;
 import net.weg.api.model.entity.Carro;
 import net.weg.api.service.CarroService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.StreamingHttpOutputMessage;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
-@RestController
 @AllArgsConstructor
-@RequestMapping("/clube")
+@RestController
+@RequestMapping("/carro")
 public class CarroController {
 
-    CarroService clubeService;
+    private CarroService carroService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Carro> buscarUm(@PathVariable(value = "id") Integer id) {
+    public ResponseEntity<Carro> buscarUm(@PathVariable Integer id){
+        try {
+            carroService.buscarUm(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (NoSuchElementException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/seguradora/{id}")
+    public ResponseEntity<Collection<Carro>> buscarCarroSeguradora(@PathVariable Integer id){
         try{
-//            return ResponseEntity.ok(clubeService.buscarUm(id));
-            return new ResponseEntity<>(clubeService.buscarUm(id),HttpStatus.OK);
+        return new ResponseEntity<>(carroService.buscarCarrosSeguradora(id),HttpStatus.OK);
+        }catch (NoSuchElementException e){
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+    }
+
+    @GetMapping("/marca")
+    public ResponseEntity<Collection<Carro>> buscarCarrosMarca(@RequestParam String marca){
+        try{
+        return new ResponseEntity<>(carroService.buscarCarrosMarca(marca),HttpStatus.OK);
         }catch (NoSuchElementException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Carro>> buscarTodos() {
-        return new ResponseEntity<>(clubeService.buscarTodos(),HttpStatus.OK);
-    }
-
-    @GetMapping("/seguradora/{id}")
-    public ResponseEntity<Collection<Carro>> buscarCarrosSeguradora(@PathVariable(value = "id") Integer id) {
-        return new ResponseEntity<>(clubeService.buscarPorSeguradora(id),HttpStatus.OK);
-    }
-
-    @GetMapping("/marca")
-    public ResponseEntity<Collection<Carro>> buscarCarrosMarca(@RequestParam String marca) {
-        return new ResponseEntity<>(clubeService.buscarPorMarca(marca),HttpStatus.OK);
+    public ResponseEntity<Collection<Carro>> buscarTodos(){
+        try{
+        return new ResponseEntity<>(carroService.buscarTodos(), HttpStatus.OK);
+            }catch (NoSuchElementException e){
+             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping
-    public void deletar(@RequestParam Integer id) {
-        clubeService.deletar(id);
+    public void deletar(@RequestParam Integer id){
+        carroService.deletar(id);
     }
 
     @PostMapping
-    public ResponseEntity<Carro> criar(@RequestBody CarroCadastroDTO clubeFutebolDTO) {
-        try {
-            return new ResponseEntity<>(clubeService.criar(clubeFutebolDTO), HttpStatus.CREATED);
-        } catch (Exception e) {
+    public ResponseEntity<Carro> cadastrar(@RequestBody CarroCadastroDTO carroDTO){
+        try{
+            carroService.cadastrar(carroDTO);
+            return new ResponseEntity<>( HttpStatus.CREATED);
+        }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
 
-    @PutMapping()
-    public ResponseEntity<Carro> editar(@RequestBody CarroEdicaoDTO edicaoDTO) {
-
+    @PutMapping
+    public ResponseEntity<Carro> editar(@RequestBody CarroEdicaoDTO carroDTO){
         try {
-            return new ResponseEntity<>(clubeService.editar(edicaoDTO),HttpStatus.OK);
+            carroService.editar(carroDTO);
+            return new ResponseEntity<>( HttpStatus.CREATED);
         }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

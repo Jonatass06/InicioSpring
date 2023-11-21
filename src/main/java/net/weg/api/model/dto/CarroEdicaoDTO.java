@@ -1,19 +1,19 @@
-package net.weg.api.model.DTO;
+package net.weg.api.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class CarroEdicaoDTO {
+@NoArgsConstructor
+public class CarroEdicaoDTO implements  IDTO{
 
-    private Integer id;
+    private int id;
     private String placa;
-    private String marca,cor,modelo;
+    private String marca;
+    private String cor;
+    private String modelo;
     private Double preco;
     private Integer ano;
-    private Double motor;
-
 }
